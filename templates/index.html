@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>高嶺のなでしこ - Translate</title>
+{% raw %}
+<script>try{document.documentElement.dataset.theme=JSON.parse(localStorage.getItem('prefs')).theme||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<style>
+:root{--fs:19px;--lh:1.8;--ff:Georgia,'Noto Serif','Times New Roman',serif;--ui:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+[data-theme=light]{--bg:#f4f6f6;--panel:#fff;--ink:#1d2327;--mut:#667177;--line:#dce1e3;--acc:#0e6e73;--onacc:#fff;--bad:#b3261e}
+[data-theme=sepia]{--bg:#ecdfc2;--panel:#f5ead2;--ink:#3a2e1f;--mut:#7d6b52;--line:#d7c6a2;--acc:#44623f;--onacc:#fff;--bad:#9b2c1c}
+[data-theme=dark]{--bg:#12151a;--panel:#1b1f25;--ink:#d8dde1;--mut:#8b959c;--line:#2b3139;--acc:#6cc4bf;--onacc:#0c1214;--bad:#ff8a80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--ui);-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header h1{font:600 1.1rem var(--ff);margin:0;padding:.7rem 0 .2rem}
+.tabs{display:flex;gap:.25rem}
+.tab{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:.55rem .2rem;cursor:pointer;color:var(--mut)}
+.tab[aria-selected=true]{color:var(--ink);border-color:var(--acc);font-weight:600}
+main{padding-bottom:4rem}
+h2.sec{font-size:1rem;margin:1.6rem 0 .5rem}
+.btn{background:var(--acc);color:var(--onacc);border:0;border-radius:6px;padding:.55rem 1rem;min-height:44px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn[disabled]{opacity:.5;cursor:default}
+.btn[aria-pressed=true]{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+input[type=text],input[type=url],input[type=password],textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.6rem .7rem}
+textarea{min-height:11rem;resize:vertical}
+.seg{display:flex;gap:.4rem;margin:1rem 0 .7rem}
+.seg .btn{flex:1}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;align-items:center}
+.mut{color:var(--mut);font-size:.88rem}
+.err{color:var(--bad);margin:.7rem 0 0}
+progress{width:100%;height:.5rem;accent-color:var(--acc)}
+#prog{margin-top:1rem}
+#reader{margin-top:1.3rem;padding:1.4rem 1.1rem 1.8rem;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+.tools{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;margin-bottom:1rem}
+.tools .btn{min-height:36px;padding:.25rem .7rem;font-size:.9rem}
+.prose{font-family:var(--ff);font-size:var(--fs);line-height:var(--lh);max-width:34em;margin:0 auto;overflow-wrap:anywhere}
+.prose h2{font-size:1.35em;line-height:1.3;text-align:center;margin:.4em 0 1.3em}
+.prose p{margin:0 0 .35em;text-indent:1.5em}
+.prose h2+p{text-indent:0}
+.next{display:block;width:100%;margin-top:1.8rem;font-size:1.05rem}
+.grow{display:grid;grid-template-columns:1fr 1fr 2.6rem;gap:.4rem;margin-bottom:.4rem}
+.rrow{display:grid;grid-template-columns:1fr 2.6rem;gap:.4rem;margin-bottom:.4rem}
+.rrow textarea{min-height:3.2rem}
+.x{background:none;border:1px solid var(--line);border-radius:6px;cursor:pointer;color:var(--mut)}
+fieldset{border:1px solid var(--line);border-radius:6px;margin:1rem 0;padding:.7rem}
+legend{padding:0 .4rem;font-weight:600}
+label.f{display:block;margin:.6rem 0 .2rem;font-size:.9rem;color:var(--mut)}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.login{min-height:100vh;display:grid;place-items:center;padding:1rem}
+.login form{width:100%;max-width:21rem;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1.5rem}
+.login h1{font:600 1.3rem var(--ff);margin:0 0 1rem}
+.login .btn{width:100%;margin-top:1rem}
+@media(min-width:700px){#reader{padding:2.2rem 2.5rem 2.5rem}}
+</style>
+{% endraw %}
+</head>
+{% if login %}
+<body>
+<main class="login">
+  <form method="post">
+    <h1>Penerjemah Novel</h1>
+    <label class="f" for="pw">Kata sandi</label>
+    <input id="pw" type="password" name="password" autofocus required autocomplete="current-password">
+    {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
+    <button class="btn" type="submit">Masuk</button>
+  </form>
+</main>
+</body>
+{% else %}
+<body data-pw="{{ '1' if has_pw else '' }}" data-envkey="{{ '1' if env_key else '' }}">
+<header>
+  <div class="wrap">
+    <h1>高嶺のなでしこ - Translate</h1>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="translate" aria-selected="true">Terjemah</button>
+      <button class="tab" role="tab" data-tab="gloss" aria-selected="false">Glosarium</button>
+      <button class="tab" role="tab" data-tab="settings" aria-selected="false">Pengaturan</button>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+{% raw %}
+<section class="pane" id="p-translate">
+  <div class="seg" role="group" aria-label="Sumber teks">
+    <button class="btn alt" data-mode="url" aria-pressed="true">Tautan</button>
+    <button class="btn alt" data-mode="text" aria-pressed="false">Tempel teks</button>
+    <button class="btn alt" data-mode="file" aria-pressed="false">Berkas</button>
+  </div>
+  <div id="m-url">
+    <input type="url" id="url" placeholder="https://situs-novel.net/bab-1" inputmode="url" aria-label="Tautan bab">
+    <div class="row"><button class="btn go" id="goUrl">Terjemahkan bab</button></div>
+  </div>
+  <div id="m-text" hidden>
+    <textarea id="txt" placeholder="Tempel teks bab di sini" aria-label="Teks bab"></textarea>
+    <div class="row"><button class="btn go" id="goText">Terjemahkan teks</button></div>
+  </div>
+  <div id="m-file" hidden>
+    <input type="file" id="file" accept=".epub,.txt" aria-label="Berkas EPUB atau TXT">
+    <p class="mut">EPUB diterjemahkan per bab lalu dikemas ulang menjadi EPUB baru. Untuk .txt gunakan encoding UTF-8.</p>
+    <div class="row"><button class="btn go" id="goFile">Terjemahkan berkas</button></div>
+  </div>
+  <div id="prog" hidden><progress id="bar" max="100"></progress><div class="mut" id="pmsg" aria-live="polite"></div></div>
+  <p class="err" id="err" role="alert" hidden></p>
+  <article id="reader" hidden>
+    <div class="tools" id="tools">
+      <button class="btn alt" data-fs="-1" aria-label="Perkecil huruf">A−</button>
+      <button class="btn alt" data-fs="1" aria-label="Perbesar huruf">A+</button>
+      <button class="btn alt" id="copy">Salin</button>
+      <a class="btn alt" id="dlTxt" style="text-decoration:none;display:inline-flex;align-items:center">Unduh .txt</a>
+    </div>
+    <div class="prose" id="out"></div>
+    <div id="epubBox" hidden class="row">
+      <a class="btn" id="dlEpub" style="text-decoration:none;display:inline-flex;align-items:center">Unduh .epub</a>
+      <a class="btn alt" id="dlTxt2" style="text-decoration:none;display:inline-flex;align-items:center">Unduh .txt</a>
+    </div>
+    <button class="btn next" id="next" hidden>Terjemahkan Bab Selanjutnya →</button>
+  </article>
+</section>
+
+<section class="pane" id="p-gloss" hidden>
+  <p class="mut">Glosarium otomatis disertakan setiap kali menerjemahkan. Simpan, lalu unduh sebagai cadangan.</p>
+  <div id="gform"></div>
+  <div class="row">
+    <button class="btn" id="gSave">Simpan</button>
+    <a class="btn alt" href="/api/glosarium/download" style="text-decoration:none;display:inline-flex;align-items:center">Unduh glosarium (.json)</a>
+    <button class="btn alt" id="gUpBtn">Unggah glosarium (.json)</button>
+    <input type="file" id="gUp" accept=".json,application/json" hidden>
+  </div>
+  <p class="mut" id="gmsg" aria-live="polite"></p>
+</section>
+
+<section class="pane" id="p-settings" hidden>
+  <h2 class="sec">API Key</h2>
+  <input type="password" id="key" placeholder="Cadangan jika GEMINI_API_KEY tidak diset" autocomplete="off" aria-label="API Key Gemini">
+  <p class="mut" id="keyNote">Disimpan hanya di browser ini.</p>
+  <h2 class="sec">Kenyamanan baca</h2>
+  <label class="f">Ukuran huruf: <b id="fsv"></b> px</label>
+  <div class="row" style="margin-top:0">
+    <button class="btn alt" data-fs="-1">A−</button><button class="btn alt" data-fs="1">A+</button>
+  </div>
+  <label class="f">Jenis huruf</label>
+  <div class="row" style="margin-top:0">
+    <button class="btn alt" data-ff="serif" style="font-family:Georgia,serif">Serif</button>
+    <button class="btn alt" data-ff="sans">Sans-serif</button>
+  </div>
+  <label class="f" for="lh">Spasi baris: <b id="lhv"></b></label>
+  <input type="range" id="lh" min="1.3" max="2.4" step="0.1">
+  <label class="f">Tema</label>
+  <div class="row" style="margin-top:0">
+    <button class="btn alt" data-th="light">Terang</button>
+    <button class="btn alt" data-th="sepia">Sepia</button>
+    <button class="btn alt" data-th="dark">Gelap</button>
+  </div>
+  <p id="logoutBox" hidden><a href="/logout" class="mut">Keluar</a></p>
+</section>
+</main>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const SERIF="Georgia,'Noto Serif','Times New Roman',serif",SANS="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const rich=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ---------- preferensi baca (localStorage) ---------- */
+let P={fs:19,lh:1.8,ff:'serif',theme:'light'};
+try{Object.assign(P,JSON.parse(localStorage.getItem('prefs')||'{}'))}catch(e){}
+function applyP(){
+  const r=document.documentElement;
+  r.dataset.theme=P.theme;r.style.setProperty('--fs',P.fs+'px');r.style.setProperty('--lh',P.lh);
+  r.style.setProperty('--ff',P.ff==='serif'?SERIF:SANS);
+  try{localStorage.setItem('prefs',JSON.stringify(P))}catch(e){}
+  $('#fsv').textContent=P.fs;$('#lhv').textContent=P.lh;$('#lh').value=P.lh;
+  $$('[data-th]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.th===P.theme));
+  $$('[data-ff]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.ff===P.ff));
+}
+$$('[data-fs]').forEach(b=>b.onclick=()=>{P.fs=Math.min(32,Math.max(13,P.fs+ +b.dataset.fs));applyP()});
+$$('[data-ff]').forEach(b=>b.onclick=()=>{P.ff=b.dataset.ff;applyP()});
+$$('[data-th]').forEach(b=>b.onclick=()=>{P.theme=b.dataset.th;applyP()});
+$('#lh').oninput=e=>{P.lh=+e.target.value;applyP()};
+applyP();
+
+/* ---------- API key ---------- */
+const keyEl=$('#key');
+try{keyEl.value=localStorage.getItem('gkey')||''}catch(e){}
+keyEl.onchange=()=>{try{localStorage.setItem('gkey',keyEl.value.trim())}catch(e){}};
+const key=()=>keyEl.value.trim();
+if(document.body.dataset.envkey)$('#keyNote').textContent='GEMINI_API_KEY sudah diset di server; kolom ini hanya cadangan.';
+if(document.body.dataset.pw)$('#logoutBox').hidden=false;
+
+/* ---------- tab & mode ---------- */
+$$('.tab').forEach(t=>t.onclick=()=>{
+  $$('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  $$('.pane').forEach(p=>p.hidden=p.id!=='p-'+t.dataset.tab);
+  if(t.dataset.tab==='gloss')loadG();
+});
+function setMode(m){
+  $$('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+  ['url','text','file'].forEach(k=>$('#m-'+k).hidden=k!==m);
+}
+$$('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+
+/* ---------- API & job ---------- */
+async function api(url,opt){
+  const r=await fetch(url,opt);let d={};
+  try{d=await r.json()}catch(e){}
+  if(r.status===401){location.href='/login';throw Error('Sesi habis')}
+  if(!r.ok)throw Error(d.error||('Kesalahan '+r.status));
+  return d;
+}
+const post=(u,b)=>api(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+function prog(j){
+  $('#prog').hidden=false;const b=$('#bar');
+  if(j.total){b.max=j.total;b.value=j.done}else b.removeAttribute('value');
+  $('#pmsg').textContent=j.msg||'';
+}
+async function runJob(start){
+  const {job_id}=await start();
+  for(;;){
+    const j=await api('/api/job/'+job_id);prog(j);
+    if(j.status==='done')return {...j,id:job_id};
+    if(j.status==='error')throw Error(j.error);
+    await sleep(2000);
+  }
+}
+async function go(fn){
+  $('#err').hidden=true;$$('.go').forEach(b=>b.disabled=true);
+  try{await fn()}catch(e){$('#err').textContent=e.message;$('#err').hidden=false}
+  finally{$$('.go').forEach(b=>b.disabled=false);$('#prog').hidden=true}
+}
+
+/* ---------- tampilan hasil ---------- */
+let cur={text:''};
+function show({text,id,hasTitle,next}){
+  cur={text};
+  const lines=text.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  $('#out').innerHTML=lines.map((l,i)=>i===0&&hasTitle?'<h2>'+rich(l)+'</h2>':'<p>'+rich(l)+'</p>').join('');
+  $('#tools').hidden=false;$('#epubBox').hidden=true;
+  $('#dlTxt').href='/api/job/'+id+'/download/txt';
+  const n=$('#next');n.hidden=!next;n.onclick=next?()=>{$('#url').value=next;setMode('url');window.scrollTo(0,0);go(()=>doUrl(next))}:null;
+  $('#reader').hidden=false;
+}
+function showEpub(j){
+  cur={text:j.text||''};
+  $('#out').innerHTML='<p>'+esc(j.msg||'Selesai.')+'</p>';
+  $('#tools').hidden=true;$('#next').hidden=true;$('#epubBox').hidden=false;
+  $('#dlEpub').href='/api/job/'+j.id+'/download/epub';$('#dlTxt2').href='/api/job/'+j.id+'/download/txt';
+  $('#reader').hidden=false;
+}
+$('#copy').onclick=()=>navigator.clipboard&&navigator.clipboard.writeText(cur.text);
+
+/* ---------- aksi terjemah ---------- */
+async function doUrl(u){
+  prog({msg:'Mengambil halaman…'});
+  const s=await post('/api/scrape',{url:u});
+  prog({msg:'Menyiapkan terjemahan…'});
+  const j=await runJob(()=>post('/api/job/text',{text:(s.title?s.title+'\n\n':'')+s.text,title:s.title,key:key()}));
+  show({text:j.text,id:j.id,hasTitle:!!s.title,next:s.next_url});
+  $('#reader').scrollIntoView();
+}
+$('#goUrl').onclick=()=>{const u=$('#url').value.trim();if(u)go(()=>doUrl(u))};
+$('#goText').onclick=()=>{const t=$('#txt').value.trim();if(!t)return;
+  go(async()=>{const j=await runJob(()=>post('/api/job/text',{text:t,title:'terjemahan',key:key()}));show({text:j.text,id:j.id});$('#reader').scrollIntoView()})};
+$('#goFile').onclick=()=>{const f=$('#file').files[0];if(!f)return;
+  go(async()=>{
+    const fd=new FormData();fd.append('file',f);fd.append('key',key());
+    const j=await runJob(()=>api('/api/job/file',{method:'POST',body:fd}));
+    j.has_epub?showEpub(j):show({text:j.text,id:j.id});
+    $('#reader').scrollIntoView();
+  })};
+
+/* ---------- glosarium ---------- */
+const SECS=[['karakter','Karakter','Nama asli','Terjemahan / deskripsi'],
+  ['istilah_dan_jurus','Istilah dan jurus','Istilah asli','Terjemahan'],['lokasi','Lokasi','Nama asli','Terjemahan']];
+let G={};
+const grow=(sec,k='',v='')=>`<div class="grow"><input type="text" class="k" value="${esc(k)}" placeholder="${esc(SECS.find(s=>s[0]===sec)[2])}" aria-label="Kunci"><input type="text" class="v" value="${esc(v)}" placeholder="${esc(SECS.find(s=>s[0]===sec)[3])}" aria-label="Nilai"><button class="x" data-del aria-label="Hapus">✕</button></div>`;
+const rrow=(v='')=>`<div class="rrow"><textarea class="rl" aria-label="Aturan">${esc(v)}</textarea><button class="x" data-del aria-label="Hapus">✕</button></div>`;
+function renderG(){
+  const m=G.metadata_novel||{};
+  let h='<fieldset><legend>Metadata novel</legend>'+[['judul','Judul'],['genre','Genre'],['gaya_narasi','Gaya narasi']]
+    .map(([k,l])=>`<label class="f">${l}</label><input type="text" data-m="${k}" value="${esc(m[k]||'')}">`).join('')+'</fieldset>';
+  SECS.forEach(([s,l])=>{h+=`<fieldset data-sec="${s}"><legend>${l}</legend>`+Object.entries(G[s]||{}).map(([k,v])=>grow(s,k,v)).join('')+`<button class="btn alt" data-add="${s}">+ Tambah</button></fieldset>`});
+  h+='<fieldset data-sec="rules"><legend>Aturan khusus bab</legend>'+(G.aturan_khusus_bab||[]).map(rrow).join('')+'<button class="btn alt" data-add="rules">+ Tambah aturan</button></fieldset>';
+  $('#gform').innerHTML=h;
+}
+$('#gform').onclick=e=>{
+  const t=e.target;
+  if(t.dataset.del!==undefined)t.parentElement.remove();
+  else if(t.dataset.add)t.insertAdjacentHTML('beforebegin',t.dataset.add==='rules'?rrow():grow(t.dataset.add));
+};
+function collectG(){
+  const o={...G};o.metadata_novel={...(G.metadata_novel||{})};
+  $$('[data-m]').forEach(i=>o.metadata_novel[i.dataset.m]=i.value.trim());
+  SECS.forEach(([s])=>{o[s]={};$$(`[data-sec="${s}"] .grow`).forEach(r=>{const k=r.querySelector('.k').value.trim();if(k)o[s][k]=r.querySelector('.v').value.trim()})});
+  o.aturan_khusus_bab=$$('.rl').map(i=>i.value.trim()).filter(Boolean);
+  return o;
+}
+const gm=t=>$('#gmsg').textContent=t;
+async function loadG(){try{G=await api('/api/glosarium');renderG()}catch(e){gm(e.message)}}
+$('#gSave').onclick=async()=>{try{G=collectG();await api('/api/glosarium',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(G)});gm('Glosarium tersimpan.')}catch(e){gm(e.message)}};
+$('#gUpBtn').onclick=()=>$('#gUp').click();
+$('#gUp').onchange=async e=>{
+  const fd=new FormData();fd.append('file',e.target.files[0]);
+  try{G=await api('/api/glosarium/upload',{method:'POST',body:fd});renderG();gm('Glosarium berhasil diunggah.')}catch(x){gm(x.message)}
+  e.target.value='';
+};
+})();
+</script>
+{% endraw %}
+</body>
+{% endif %}
+</html>

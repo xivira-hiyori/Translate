@@ -1,0 +1,25 @@
+{
+  "metadata_novel": {
+    "judul": "Romelia Senki",
+    "genre": "Fantasi / Militer / Politik",
+    "gaya_narasi": "Formal-elegan (umumnya orang ketiga, namun ikuti sudut pandang teks asli jika memakai orang pertama)"
+  },
+  "karakter": {
+    "Romelia": "Romelia (Protagonis, nona muda bangsawan yang tegas dan cerdas)",
+    "Henri": "Henri (Pangeran, berbicara formal-bangsawan)",
+    "Zelbeck": "Zelbeck (Gubernur wilayah perbatasan, berinteraksi formal dengan Romelia)"
+  },
+  "istilah_dan_jurus": {
+    "Demon King": "Raja Iblis",
+    "Young Lady": "Nona Muda",
+    "Lord": "Tuan",
+    "Madam": "Nyonya",
+    "Governor": "Gubernur",
+    "Extermination troop": "Pasukan Pembasmi"
+  },
+  "lokasi": {},
+  "aturan_khusus_bab": [
+    "Gunakan gelar kebangsawanan yang sesuai seperti Tuan, Nona, Nyonya, Yang Mulia, Marquis, atau Count.",
+    "Dalam dialog formal dengan pejabat atau bangsawan, gunakan kata ganti 'saya/Anda', sedangkan pada narasi sudut pandang orang pertama gunakan 'aku'."
+  ]
+}
