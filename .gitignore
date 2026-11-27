@@ -1,0 +1,12 @@
+# File rahasia & API Key
+.env
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
